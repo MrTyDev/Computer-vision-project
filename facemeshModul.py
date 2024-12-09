@@ -15,9 +15,10 @@ class faceMeshModule:
             min_tracking_confidence=minTrackCon
         )
         self.drawSpec = self.mpDraw.DrawingSpec(thickness=1, circle_radius=2)
-        self.MOUTH_LANDMARKS = [0, 267, 269, 270, 409, 306, 375, 321,
-                                405, 314, 17, 84, 181, 91, 146, 61,
-                                185, 40, 39, 37]
+        #self.MOUTH_LANDMARKS = [0, 267, 269, 270, 409, 306, 375, 321,
+        #                        405, 314, 17, 84, 181, 91, 146, 61,
+        #                       185, 40, 39, 37]
+        self.MOUTH_INNER_LANDMARKS = [13,312,311,310,415,308,324,318,402,317,14,87,178,88,95,78,191,80,81,82]
         self.FACE_LANDMARKS = [10, 338, 297, 332, 284, 251, 389, 356,
                                454, 323, 361, 288, 397, 365, 379, 378,
                                400, 377, 152, 148, 176, 149, 150, 136,
@@ -31,11 +32,10 @@ class faceMeshModule:
         self.LEFT_EYEBROW = [285, 293, 300, 296, 334]
         self.NOSE = [168, 6, 197, 195, 5, 1, 2, 3, 4,
                      19, 44, 274, 440, 220, 344, 278, 294, 115, 48, 64]
-        self.RIGHT_CHEEK = [50, 117, 118, 101, 36,
-                            123, 147, 213, 192, 214, 202]
-        self.LEFT_CHEEK = [349, 348, 347, 330, 280,
-                           411, 416, 434, 422, 424]
-        self.ALL_LANDMARKS = (self.MOUTH_LANDMARKS + self.FACE_LANDMARKS +
+        self.RIGHT_CHEEK = [101,36,203,206,216,212]
+        self.LEFT_CHEEK = [330,266,423,426,436,432]
+
+        self.ALL_LANDMARKS = (self.MOUTH_INNER_LANDMARKS + self.FACE_LANDMARKS +
                               self.RIGHT_EYE + self.LEFT_EYE +
                               self.RIGHT_EYEBROW + self.LEFT_EYEBROW +
                               self.NOSE + self.RIGHT_CHEEK + self.LEFT_CHEEK)
@@ -142,6 +142,6 @@ def main(input_source=None):
 
 if __name__ == "__main__":
     # For image input, provide the image path
-    main("C:/Users/tyhug/Desktop/Computer_vision_MLProject/Computer-vision-project/train/disgust/Training_680349.jpg")
+    #main("C:/Users/tyhug/Desktop/Computer_vision_MLProject/Computer-vision-project/train/disgust/Training_680349.jpg")
     # For webcam input, call main without arguments
-    # main()
+    main()
