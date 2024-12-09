@@ -7,8 +7,8 @@ array = [[[27, 32], [29, 31], [31, 30], [33, 30], [34, 30], [34, 30], [34, 32], 
 
 # Extract x and y coordinates
 data = array[0]
-x = [point[0] for point in data]
-y = [point[1] for point in data]
+x = [point[1] for point in data]
+y = [point[0] for point in data]
 
 # Plot the data
 plt.scatter(x, y)
