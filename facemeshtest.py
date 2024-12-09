@@ -143,6 +143,6 @@ def main(input_source=None):
 
 if __name__ == "__main__":
     # For image input, provide the image path
-    main("C:/Users/tyhug/OneDrive/Skrivbord/ML Final Project/test/angry/PrivateTest_26530508.jpg")
+    main("C:/Users/tyhug/Desktop/Computer_vision_MLProject/Computer-vision-project/train/disgust/Training_680349.jpg")
     # For webcam input, call main without arguments
     # main()
