@@ -5,9 +5,8 @@ import matplotlib.pyplot as plt
 import facemeshModul as fm
 import json
 import cv2
-import math
 
-class DataProcessing:
+class TrainingModule:
     def __init__(self, environmentpath=os.getcwd(), testfolderpath=os.path.join(os.getcwd(), "test"), trainfolderpath=os.path.join(os.getcwd(), "train")):
         self.testfolderpath = testfolderpath
         self.trainfolderpath = trainfolderpath
@@ -15,28 +14,26 @@ class DataProcessing:
         os.makedirs(self.processed_data_folder, exist_ok=True)
         self.face_mesh_module = fm.faceMeshModule()
 
-    def calculate_distance(self, point1, point2):
-        x1, y1 = point1
-        x2, y2 = point2
-        distance = math.hypot(x2 - x1, y2 - y1)
-        return distance  
+    def search_folder(self, FolderPath):
+        # List all files in the folder
+        files = os.listdir(FolderPath)
+        return files
 
-    def calculate_angle(self, pointA, pointB, pointC):
-        a = np.array(pointA)
-        b = np.array(pointB)
-        c = np.array(pointC)
-        ba = a - b
-        bc = c - b
-        cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
-        angle = np.arccos(cosine_angle)
-        return np.degrees(angle)
+    def open_folder_list_files(self, FolderPath):
+        # List all files in the folder
+        data = []
+        for root, dirs, files in os.walk(FolderPath):
+            for file in files:
+                if file.endswith(".jpeg") or file.endswith(".jpg"):
+                    file_path = os.path.join(root, file)
+                    data.append(file_path)
+        return data
 
     def process_images(self, FolderPath, num_images_per_folder):
         for root, dirs, files in os.walk(FolderPath):
             if not files:
                 continue
             image_files = [file for file in files if file.endswith(('.jpg', '.jpeg', '.png'))]
-            # Limit the number of images to process
             images_to_process = image_files[:num_images_per_folder]
             for idx, file in enumerate(images_to_process):
                 image_path = os.path.join(root, file)
@@ -47,40 +44,13 @@ class DataProcessing:
                         if result is not None:
                             _, faces = result
                             if faces:
-                                for face_idx, face_landmarks in enumerate(faces):
-                                    landmark_coords = {}
-                                    for landmark in face_landmarks:
-                                        id, x, y = landmark
-                                        landmark_coords[id] = (x, y)
-                                    required_mouth_landmarks = [13, 14, 78, 81, 178, 311, 402]
-                                    if all(lm in landmark_coords for lm in required_mouth_landmarks):
-                                        # Calculate distances
-                                        dist_13_14 = self.calculate_distance(landmark_coords[13], landmark_coords[14])
-                                        dist_81_178 = self.calculate_distance(landmark_coords[81], landmark_coords[178])
-                                        dist_311_402 = self.calculate_distance(landmark_coords[311], landmark_coords[402])
-                                        # Calculate angle
-                                        angle_13_78_14 = self.calculate_angle(landmark_coords[13], landmark_coords[78], landmark_coords[14])
-                                        # Store calculations
-                                        calculations = {
-                                            'distances': {
-                                                '13_14': dist_13_14,
-                                                '81_178': dist_81_178,
-                                                '311_402': dist_311_402
-                                            },
-                                            'angles': {
-                                                '13_78_14': angle_13_78_14
-                                            }
-                                        }
-                                        # Save calculations
-                                        relative_path = os.path.relpath(image_path, FolderPath)
-                                        save_folder = os.path.join(self.processed_data_folder, os.path.dirname(relative_path))
-                                        os.makedirs(save_folder, exist_ok=True)
-                                        save_path = os.path.join(save_folder, f"face{idx+1}_calculations.json")
-                                        with open(save_path, 'w') as f:
-                                            json.dump(calculations, f)
-                                        print(f"Processed and saved calculations: {save_path}")
-                                    else:
-                                        print(f"Required landmarks not found in face {face_idx} of image {image_path}")
+                                relative_path = os.path.relpath(image_path, FolderPath)
+                                save_folder = os.path.join(self.processed_data_folder, os.path.dirname(relative_path))
+                                os.makedirs(save_folder, exist_ok=True)
+                                save_path = os.path.join(save_folder, f"face{idx+1}data.json")
+                                with open(save_path, 'w') as f:
+                                    json.dump(faces, f)
+                                print(f"Processed and saved: {save_path}")
                             else:
                                 print(f"No face detected in image: {image_path}")
                         else:
@@ -92,6 +62,6 @@ class DataProcessing:
 
 if __name__ == "__main__":
     num_images = int(input("Enter the number of images to process from each folder: "))
-    Processing_module = DataProcessing()
-    Processing_module.process_images(Processing_module.trainfolderpath, num_images)
+    training_module = TrainingModule()
+    training_module.process_images(training_module.trainfolderpath, num_images)
     print("Processing complete.")
