@@ -13,13 +13,37 @@ class DataPreparation:
         # Configuration for features
         self.feature_config = {
             'mouth': {
-                'distances': [(13, 14), (81, 178), (311, 402)],
-                'angles': [(13, 78, 14)]
+                'distances': [(13, 14), (81, 178), (311, 402), (78, 308)],
+                'angles': [(13, 78, 308)]
+            },
+            'right eye': {
+                'distances': [(159, 145), (157,154), (161,163)],
+                'angles': [(33, 159, 133)]
             },
             'left eye': {
-                'distances': [(33, 133), (33, 246), (33, 161)],
-                'angles': [(33, 246, 161)]
+                'distances': [(386,374), (384,381), (388,390)],
+                'angles': [(362,386,263)]
             },
+            'right eyebrow': {
+                'distances': [(52,46), (52,55)],
+                'angles': [(46,52,55)]
+            },
+            'left eyebrow': {
+                'distances': [(285,282), (282,276)],
+                'angles': [(285,282,276)]
+            },
+            'Nose': {
+                'distances': [],
+                'angles': [(278,48,5)]
+            }, 
+            'right cheek': {
+                'distances': [(101,216)],
+                'angles': [(101,203,216)]
+            }, 
+            'left cheek': {
+                'distances': [(330,436)],
+                'angles': [(330,423,436)]
+            },          
             # Add more features here
         }
 
