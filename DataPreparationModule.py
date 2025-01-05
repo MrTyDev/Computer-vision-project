@@ -79,13 +79,13 @@ class DataPreparation:
                 x2, y2 = self.find_landmark(data, dist_pair[1])
                 
                 if x1 is not None and x2 is not None:
-                    print(f"Distance pair: {dist_pair[0]} and {dist_pair[1]}")
-                    print(f"Point1 (ID {dist_pair[0]}): x={x1}, y={y1}")
-                    print(f"Point2 (ID {dist_pair[1]}): x={x2}, y={y2}")
+                    #print(f"Distance pair: {dist_pair[0]} and {dist_pair[1]}")
+                    #print(f"Point1 (ID {dist_pair[0]}): x={x1}, y={y1}")
+                    #print(f"Point2 (ID {dist_pair[1]}): x={x2}, y={y2}")
                     distance = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
                     features[feature_name]['distances'][f'distance_{dist_pair[0]}_{dist_pair[1]}'] = distance
-                    print(f"Calculated distance: {distance}")
-                    time.sleep(1)
+                    #print(f"Calculated distance: {distance}")
+                   
                 else:
                     print(f"Warning: Landmark IDs {dist_pair[0]} or {dist_pair[1]} are not found in the data.")
             
@@ -95,13 +95,13 @@ class DataPreparation:
                 x3, y3 = self.find_landmark(data, angle_triplet[2])
                 
                 if x1 is not None and x2 is not None and x3 is not None:
-                    print(f"Angle triplet: {angle_triplet[0]}, {angle_triplet[1]}, and {angle_triplet[2]}")
-                    print(f"Point1 (ID {angle_triplet[0]}): x={x1}, y={y1}")
-                    print(f"Point2 (ID {angle_triplet[1]}): x={x2}, y={y2}")
-                    print(f"Point3 (ID {angle_triplet[2]}): x={x3}, y={y3}")
+                    #print(f"Angle triplet: {angle_triplet[0]}, {angle_triplet[1]}, and {angle_triplet[2]}")
+                    #print(f"Point1 (ID {angle_triplet[0]}): x={x1}, y={y1}")
+                    #print(f"Point2 (ID {angle_triplet[1]}): x={x2}, y={y2}")
+                    #print(f"Point3 (ID {angle_triplet[2]}): x={x3}, y={y3}")
                     angle = self.calculate_angle((x1, y1), (x2, y2), (x3, y3))
                     features[feature_name]['angles'][f'angle_{angle_triplet[0]}_{angle_triplet[1]}_{angle_triplet[2]}'] = angle
-                    print(f"Calculated angle: {angle}")
+                    #print(f"Calculated angle: {angle}")
                 else:
                     print(f"Warning: Landmark IDs {angle_triplet[0]}, {angle_triplet[1]}, or {angle_triplet[2]} are not found in the data.")
         
